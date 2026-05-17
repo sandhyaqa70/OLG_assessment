@@ -1,197 +1,116 @@
 # Web Automation Test Suite
 
-Simple web automation testing framework using Python, Selenium, and Pytest.
+A web automation framework built with Python, Selenium, and Pytest.
 
-## Overview
+## What This Does
 
-This project contains automated tests for web applications:
-- **Part 1**: Basic assertions on Google homepage (3 tests - all passing ✅)
-- **Part 2**: Restaurant search on Google Maps (4 tests - code ready)
+Automated tests for web applications. Tests two scenarios:
 
-## Quick Start
+1. **Google Homepage** - Verifies page loads and basic elements are visible (3 tests)
+2. **Google Maps** - Tests restaurant search functionality (4 tests)
 
-1. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## Setup
 
-2. **Run tests**
-   ```bash
-   pytest -v              # All tests
-   pytest -v -m part1     # Part 1 only (3 tests)
-   pytest -v -m part2     # Part 2 only (4 tests)
-   ```
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-## Requirements
+## Running Tests
 
-- Python 3.11+
-- Chrome or Firefox browser
-- Internet connection (for Part 2)
+```bash
+# Run all tests
+pytest -v
 
-## What Gets Tested
+# Run only Google homepage tests
+pytest -v -m part1
 
-### Part 1: Google Homepage
-- ✅ Page title contains "Google"
-- ✅ Search input box is visible
-- ✅ Search button is visible
+# Run only Maps tests
+pytest -v -m part2
 
-### Part 2: Google Maps Restaurant Search
-- Google Maps page loads
-- Restaurant search returns results
-- First restaurant has a name
-- Results are valid
+# See results in HTML report
+pytest --html=reports/report.html --self-contained-html
+```
 
-## Project Structure
+## Project Layout
 
 ```
 tests/
 ├── part1_basic/
-│   └── test_google_homepage.py       (3 tests)
+│   └── test_google_homepage.py
 └── part2_restaurant/
-    └── test_restaurant_search.py     (4 tests)
+    └── test_restaurant_search.py
 
 page_objects/
-├── google_homepage.py                (Google page interactions)
-└── google_maps.py                    (Maps page interactions)
+├── google_homepage.py
+└── google_maps.py
 
 utils/
-├── driver_factory.py                 (Browser management)
-├── logger.py                         (Test logging)
-├── screenshot_manager.py             (Failure screenshots)
-└── wait_helper.py                    (Smart waits)
+├── driver_factory.py
+├── logger.py
+├── wait_helper.py
+└── screenshot_manager.py
 
 config/
-└── settings.py                       (Configuration)
+└── settings.py
 
-conftest.py                           (Pytest fixtures)
-pytest.ini                            (Test config)
-requirements.txt                      (Dependencies)
-.env                                  (Environment variables)
+conftest.py
+pytest.ini
+requirements.txt
+.env
 ```
 
 ## Configuration
 
-Modify `.env` to change test behavior:
+Edit `.env` to customize:
 
 ```env
-BROWSER=chrome              # chrome or firefox
-HEADLESS=True              # False to see browser
-EXPLICIT_WAIT=15           # Wait timeout (seconds)
-LOG_LEVEL=INFO             # DEBUG for more details
+BROWSER=chrome          # Use chrome or firefox
+HEADLESS=True          # Set to False to see browser
+EXPLICIT_WAIT=15       # How long to wait for elements
+LOG_LEVEL=INFO
 ```
 
-## How It Works
+## How It's Built
 
-### Page Object Model
-Each website has a page class handling interactions:
+### Page Objects
+Each website has a class that handles its interactions. Makes tests easier to read and maintain.
 
 ```python
-from page_objects.google_homepage import GoogleHomepage
-
 page = GoogleHomepage(driver)
 title = page.get_page_title()
 is_visible = page.is_search_box_visible()
 ```
 
-### WebDriver Factory
-Manages browser creation and cleanup:
-- Automatically downloads ChromeDriver/GeckoDriver
-- Supports Chrome and Firefox
-- Handles headless mode
-
-### Test Fixtures
-Pytest fixtures setup/teardown for each test:
-- `driver` fixture: Creates new browser instance
-- Automatically closes after test completes
+### Fixtures
+Pytest fixtures handle browser setup and cleanup automatically for each test.
 
 ### Logging
-All actions logged to `logs/` directory with timestamps.
-
-### Screenshots
-Automatic screenshots on test failures saved to `screenshots/` directory.
-
-## Running Tests
-
-```bash
-# Verbose output
-pytest -v
-
-# Only Part 1 (basic assertions)
-pytest -v -m part1
-
-# Only Part 2 (restaurant search)
-pytest -v -m part2
-
-# Generate HTML report
-pytest --html=reports/report.html --self-contained-html
-
-# Stop on first failure
-pytest -x
-
-# Debug mode (see browser)
-HEADLESS=False pytest -v
-```
+Every action is logged to files for debugging. Failed tests auto-capture screenshots.
 
 ## Troubleshooting
 
 **Tests timeout?**
-```env
-EXPLICIT_WAIT=30        # Increase wait time
-```
+- Increase `EXPLICIT_WAIT` in `.env`
+- Check your internet connection
 
-**Browser not opening?**
+**Browser won't start?**
 ```bash
 pip install --upgrade webdriver-manager
 ```
 
-**Want to debug?**
+**Want to watch the tests run?**
 ```env
-HEADLESS=False          # See what browser does
-LOG_LEVEL=DEBUG         # More verbose logs
+HEADLESS=False
 ```
 
-**Still having issues?**
-- Check logs/ directory for detailed error messages
-- Check screenshots/ directory for failure screenshots
-- Ensure Chrome/Firefox is installed
-- Check internet connection for Part 2
+## Requirements
 
-## Test Results
+- Python 3.11+
+- Chrome or Firefox
+- Internet connection (for Maps tests)
 
-**Part 1 (Google Homepage)**
-```
-test_page_title_assertion ✅ PASSED
-test_search_box_is_visible ✅ PASSED  
-test_search_button_is_visible ✅ PASSED
-```
+## What Tests Pass
 
-**Part 2 (Restaurant Search)**
-```
-test_google_maps_page_loads - Ready
-test_restaurant_search_returns_results - Ready
-test_first_restaurant_has_name - Ready
-test_restaurant_results_verification - Ready
-```
-
-## Tools Used
-
-- **Selenium 4.15**: Web browser automation
-- **Pytest 9.0**: Test framework
-- **WebDriver Manager 4.0**: Automatic driver downloads
-- **Python-dotenv 1.0**: Configuration management
-- **Pytest-HTML 4.1**: Test reports
-- **Pillow 10.0**: Screenshot capture
-
-## Notes
-
-- Part 2 requires Google Maps to load properly (internet dependent)
-- Default browser is Chrome, switch to Firefox in .env
-- All test logs saved to logs/ directory
-- Failed test screenshots saved to screenshots/ directory
-- HTML report generated to reports/report.html
-
-## Design Patterns Used
-
-- **Page Object Model**: Encapsulates page interactions
-- **Singleton Pattern**: Logger instance management
-- **Factory Pattern**: WebDriver creation
+- Part 1: All 3 tests passing ✅
+- Part 2: Code ready (internet dependent)

@@ -1,9 +1,4 @@
-"""
-Part 1 - Basic Assertions Tests
-Tests for verifying basic web page functionality:
-- Page title assertion
-- Visible elements assertions
-"""
+"""Tests for Google Homepage."""
 import pytest
 from config.settings import GOOGLE_URL
 from page_objects.google_homepage import GoogleHomepage
@@ -14,30 +9,32 @@ logger = LoggerManager.get_logger(__name__)
 
 @pytest.mark.part1
 class TestGoogleHomepageBasics:
-    """Test suite for Google Homepage basic assertions."""
+    """Google Homepage tests."""
     
     @pytest.fixture(autouse=True)
     def setup(self, driver):
-        """Setup for each test - navigate to Google homepage."""
-        logger.info(f"Navigating to {GOOGLE_URL}")
+        """Navigate to Google homepage before each test."""
+        logger.info(f"Going to {GOOGLE_URL}")
         driver.get(GOOGLE_URL)
         self.page = GoogleHomepage(driver)
     
     @pytest.mark.smoke
     def test_page_title_assertion(self, driver):
-        """
-        TEST 1: Verify the page title matches expected value.
-        
-        Assertion: Page title should be 'Google' or contain 'Google'
-        """
-        logger.info("Starting test: Page Title Assertion")
-        
+        """Verify page title contains 'Google'."""
         title = self.page.get_page_title()
-        
-        # Assert that page title contains 'Google'
-        assert "Google" in title, f"Expected 'Google' in title, but got: {title}"
-        
-        logger.info(f"[PASS] Page title assertion passed: {title}")
+        assert "Google" in title, f"Expected 'Google' in title, got: {title}"
+    
+    @pytest.mark.smoke
+    def test_search_box_is_visible(self, driver):
+        """Verify search box is visible on the page."""
+        is_visible = self.page.is_search_box_visible()
+        assert is_visible is True, "Search box not visible"
+    
+    @pytest.mark.smoke
+    def test_search_button_is_visible(self, driver):
+        """Verify search button is visible on the page."""
+        is_visible = self.page.is_search_button_visible()
+        assert is_visible is True, "Search button not visible"
     
     @pytest.mark.smoke
     def test_search_box_is_visible(self, driver):

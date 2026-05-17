@@ -1,10 +1,6 @@
-"""
-Page Object Model for Google Maps - Part 2 Restaurant Search
-"""
+"""Google Maps page object."""
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from utils.wait_helper import WaitHelper
 from utils.logger import LoggerManager
 import time
@@ -13,40 +9,23 @@ logger = LoggerManager.get_logger(__name__)
 
 
 class GoogleMapsMaps:
-    """Page Object for Google Maps."""
+    """Handles interactions with Google Maps."""
     
     # Locators
     SEARCH_BOX = (By.CSS_SELECTOR, "input[type='text'][placeholder*='Search']")
-    SEARCH_INPUT = (By.CSS_SELECTOR, "div[role='combobox'] input")
-    RESTAURANT_ITEMS = (By.CSS_SELECTOR, "a[data-item-id]")
     RESTAURANT_RESULT = (By.CSS_SELECTOR, "div[role='listbox'] div[role='option']")
-    RESULTS_CONTAINER = (By.CSS_SELECTOR, "div[role='main']")
     PLACE_NAME = (By.CSS_SELECTOR, "div.fontTitleSmall")
     
     def __init__(self, driver):
-        """Initialize with WebDriver instance."""
+        """Initialize with WebDriver."""
         self.driver = driver
-        logger.info("Initialized GoogleMaps page object")
     
     def get_page_title(self):
-        """
-        Get the page title.
-        
-        Returns:
-            str: Page title
-        """
-        title = self.driver.title
-        logger.info(f"Page title: {title}")
-        return title
+        """Get the page title."""
+        return self.driver.title
     
     def search_restaurants(self, query="Restaurants", location=""):
-        """
-        Search for restaurants on Google Maps.
-        
-        Args:
-            query: Search query (default: "Restaurants")
-            location: Location to search in (optional)
-        """
+        """Search for restaurants on Maps."""
         try:
             # Try to find and click the search box
             search_box = WaitHelper.wait_for_element_visible(self.driver, self.SEARCH_BOX, timeout=10)
