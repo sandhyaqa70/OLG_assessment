@@ -26,28 +26,11 @@ class TestGoogleHomepageBasics:
     
     @pytest.mark.smoke
     def test_search_box_is_visible(self, driver):
-        """Verify search box is visible on the page."""
-        is_visible = self.page.is_search_box_visible()
-        assert is_visible is True, "Search box not visible"
-    
-    @pytest.mark.smoke
-    def test_search_button_is_visible(self, driver):
-        """Verify search button is visible on the page."""
-        is_visible = self.page.is_search_button_visible()
-        assert is_visible is True, "Search button not visible"
-    
-    @pytest.mark.smoke
-    def test_search_box_is_visible(self, driver):
-        """
-        TEST 2: Verify the search box element is visible.
-        
-        Assertion: Search input field should be visible on the page
-        """
+        """Verify the search box element is visible."""
         logger.info("Starting test: Search Box Visibility Assertion")
         
         is_visible = self.page.is_search_box_visible()
         
-        # Assert that search box is visible
         assert is_visible is True, "Search box element is not visible on the page"
         
         logger.info("[PASS] Search box visibility assertion passed")

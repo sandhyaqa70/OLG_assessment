@@ -64,7 +64,7 @@ class GoogleMapsMaps:
         """
         try:
             # Wait for results to be present
-            results = WaitHelper.wait_for_elements_visible(self.driver, self.RESTAURANT_ITEMS, timeout=10)
+            results = WaitHelper.wait_for_elements_visible(self.driver, self.RESTAURANT_RESULT, timeout=10)
             logger.info(f"Found {len(results)} restaurant results")
             return results
         except Exception as e:
