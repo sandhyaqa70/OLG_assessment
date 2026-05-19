@@ -16,7 +16,7 @@ EXPLICIT_WAIT = int(os.getenv("EXPLICIT_WAIT", "20"))
 GOOGLE_URL = "https://www.google.com"
 
 # URLs - Part 2: Restaurant Search
-GOOGLE_MAPS_URL = "https://maps.google.com"
+GOOGLE_MAPS_URL = "https://www.google.com"
 
 # Logging
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
